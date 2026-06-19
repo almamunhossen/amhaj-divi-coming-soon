@@ -1,10 +1,12 @@
 <?php
 /*
 Plugin Name: Amhaj Divi Coming Soon
+Plugin URI: https://github.com/almamunhossen/amhaj-divi-coming-soon
 Description: Display a selected page as a Coming Soon page while allowing admins full access.
 Version: 1.0.1
 Author: Al Mamun Hossen
 Author URI: https://www.almamunhossen.com
+Update URI: https://github.com/almamunhossen/amhaj-divi-coming-soon
 Text Domain: amhaj-divi-coming-soon
 Email: almamunhossen@gmail.com
 */
