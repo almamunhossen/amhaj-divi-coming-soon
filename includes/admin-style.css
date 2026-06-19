@@ -139,35 +139,37 @@
     background-color: white;
     transition: .4s;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.adcs-switch input:checked + .adcs-slider {
+.adcs-switch input:checked+.adcs-slider {
     background-color: #10b981;
 }
 
-.adcs-switch input:focus + .adcs-slider {
+.adcs-switch input:focus+.adcs-slider {
     box-shadow: 0 0 1px #10b981;
 }
 
-.adcs-switch input:checked + .adcs-slider:before {
+.adcs-switch input:checked+.adcs-slider:before {
     transform: translateX(30px);
 }
 
-.adcs-select {
+.wp-core-ui .adcs-wrap select,
+.adcs-wrap select {
     width: 100%;
     max-width: 350px;
     padding: 10px 14px;
     background-color: #0f172a;
-    border: 1px solid #475569;
-    color: #f1f5f9;
-    border-radius: 8px;
+    border: 1px solid #303d51;
+    color: #ffffff;
+    border-radius: 7px;
     font-size: 14px;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.adcs-select:focus {
+.wp-core-ui .adcs-wrap select:focus,
+.adcs-wrap select:focus {
     border-color: #6366f1;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
 }
@@ -229,10 +231,12 @@
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
     }
+
     70% {
         transform: scale(1);
         box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
     }
+
     100% {
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
@@ -244,10 +248,12 @@
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
     }
+
     70% {
         transform: scale(1);
         box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
     }
+
     100% {
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
