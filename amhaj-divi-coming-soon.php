@@ -229,6 +229,10 @@ class Amhaj_Divi_Coming_Soon {
                                     <span class="adcs-meta-label"><?php esc_html_e('Update System', 'amhaj-divi-coming-soon'); ?></span>
                                     <span class="adcs-meta-value" style="color: #10b981;"><?php esc_html_e('Connected', 'amhaj-divi-coming-soon'); ?></span>
                                 </li>
+                                <li class="adcs-meta-item">
+                                    <span class="adcs-meta-label"><?php esc_html_e('Auto-Updates', 'amhaj-divi-coming-soon'); ?></span>
+                                    <span class="adcs-meta-value" style="color: #10b981;"><?php esc_html_e('Force-Enabled', 'amhaj-divi-coming-soon'); ?></span>
+                                </li>
                             </ul>
                             
                             <?php
@@ -328,6 +332,17 @@ class Amhaj_Divi_Coming_Soon_Updater {
         add_filter('pre_set_site_transient_update_plugins', [$this, 'check_update']);
         add_filter('plugins_api', [$this, 'plugin_popup_details'], 20, 3);
         add_filter('upgrader_source_selection', [$this, 'source_selection'], 10, 4);
+        add_filter('auto_update_plugin', [$this, 'force_auto_update'], 10, 2);
+    }
+
+    /**
+     * Force auto-updates for this specific plugin.
+     */
+    public function force_auto_update($update, $item) {
+        if (isset($item->plugin) && $item->plugin === $this->slug) {
+            return true;
+        }
+        return $update;
     }
 
     /**
