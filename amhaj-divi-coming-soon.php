@@ -16,6 +16,7 @@ if (!defined('ABSPATH')) exit;
 class Amhaj_Divi_Coming_Soon {
     const OPTION_ENABLED = 'adcs_enabled';
     const OPTION_PAGE_ID = 'adcs_page_id';
+    const OPTION_AUTO_UPDATE = 'adcs_auto_update_enabled';
 
     public function __construct() {
         add_action('admin_menu', [$this, 'menu']);
@@ -52,6 +53,12 @@ class Amhaj_Divi_Coming_Soon {
             'sanitize_callback' => 'absint',
             'default' => 0,
         ]);
+        register_setting('adcs_group', self::OPTION_AUTO_UPDATE, [
+            'type' => 'boolean',
+            'sanitize_callback' => [__CLASS__, 'sanitize_enabled'],
+            'default' => 1,
+        ]);
+
     }
 
     public static function sanitize_enabled($val) {
@@ -183,6 +190,19 @@ class Amhaj_Divi_Coming_Soon {
                                 </div>
                             </div>
 
+                                                        <div class="adcs-form-group">
+                                <label class="adcs-form-label" for="<?php echo esc_attr(self::OPTION_AUTO_UPDATE); ?>">
+                                    <?php esc_html_e('Enable Auto-Updates', 'amhaj-divi-coming-soon'); ?>
+                                </label>
+                                <label class="adcs-switch">
+                                    <input type="hidden" name="<?php echo esc_attr(self::OPTION_AUTO_UPDATE); ?>" value="0" />
+                                    <input type="checkbox" name="<?php echo esc_attr(self::OPTION_AUTO_UPDATE); ?>" value="1" <?php checked(get_option(self::OPTION_AUTO_UPDATE), 1); ?> />
+                                    <span class="adcs-slider"></span>
+                                </label>
+                                <div class="adcs-form-help">
+                                    <?php esc_html_e('Allow the plugin to automatically update from GitHub releases.', 'amhaj-divi-coming-soon'); ?>
+                                </div>
+                            </div>
                             <div style="margin-top: 30px;">
                                 <button type="submit" class="adcs-btn-submit">
                                     <?php esc_html_e('Save Changes', 'amhaj-divi-coming-soon'); ?>
@@ -230,8 +250,10 @@ class Amhaj_Divi_Coming_Soon {
                                     <span class="adcs-meta-value" style="color: #10b981;"><?php esc_html_e('Connected', 'amhaj-divi-coming-soon'); ?></span>
                                 </li>
                                 <li class="adcs-meta-item">
-                                    <span class="adcs-meta-label"><?php esc_html_e('Auto-Updates', 'amhaj-divi-coming-soon'); ?></span>
-                                    <span class="adcs-meta-value" style="color: #10b981;"><?php esc_html_e('Force-Enabled', 'amhaj-divi-coming-soon'); ?></span>
+                                <span class="adcs-meta-label"><?php esc_html_e('Auto-Updates', 'amhaj-divi-coming-soon'); ?></span>
+                                <span class="adcs-meta-value" style="color: <?php echo get_option(self::OPTION_AUTO_UPDATE) ? '#10b981' : '#ef4444'; ?>;">
+                                    <?php echo get_option(self::OPTION_AUTO_UPDATE) ? esc_html__('Enabled', 'amhaj-divi-coming-soon') : esc_html__('Disabled', 'amhaj-divi-coming-soon'); ?>
+                                </span>
                                 </li>
                             </ul>
                             
@@ -340,7 +362,9 @@ class Amhaj_Divi_Coming_Soon_Updater {
      */
     public function force_auto_update($update, $item) {
         if (isset($item->plugin) && $item->plugin === $this->slug) {
-            return true;
+            // Respect user setting for auto updates
+            $auto_update_enabled = get_option('adcs_auto_update_enabled', 1);
+            return $auto_update_enabled ? true : $update;
         }
         return $update;
     }
